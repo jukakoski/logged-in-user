@@ -3,6 +3,7 @@ MANIFEST.in
 README.md
 pyproject.toml
 logged_in_user/__init__.py
+logged_in_user/pyproject.toml
 logged_in_user.egg-info/PKG-INFO
 logged_in_user.egg-info/SOURCES.txt
 logged_in_user.egg-info/dependency_links.txt
