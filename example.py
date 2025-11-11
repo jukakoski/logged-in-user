@@ -5,6 +5,13 @@ from logged_in_user import logged_in_user
 # During development, we can run this just as we would any other Streamlit
 # app: `$ streamlit run logged_in_user/example.py`
 
+# Initialize session state for logout tracking
+if "logout_clicked_1" not in st.session_state:
+    st.session_state.logout_clicked_1 = False
+
+if "logout_clicked_2" not in st.session_state:
+    st.session_state.logout_clicked_2 = False
+
 st.subheader("User Menu Component with Mock Data")
 
 # Mock data for testing the user menu component
@@ -23,10 +30,25 @@ result = logged_in_user(
     profile_photo_url=mock_user_data["profile_photo_url"],
     initials=mock_user_data["initials"],
     logout_url=mock_user_data["logout_url"],
+    key="user1",
 )
 
-if result.get("logout_clicked"):
-    st.warning("Logout button was clicked!")
+st.write(f"Result: `{result}`")
+
+# Check for state change
+if result and result.get("logout_clicked") and not st.session_state.logout_clicked_1:
+    st.warning("✅ Logout button was clicked!")
+    st.session_state.logout_clicked_1 = True
+
+# Reset logic
+if (
+    result
+    and not result.get("logout_clicked")
+    and st.session_state.logout_clicked_1
+    and False
+):
+    st.session_state.logout_clicked_1 = False
+
 
 st.markdown("---")
 st.subheader("User Menu without Profile Photo")
@@ -47,5 +69,13 @@ result2 = logged_in_user(
     key="user2",
 )
 
-if result2.get("logout_clicked"):
-    st.warning("Logout button was clicked for user 2!")
+st.write(f"Result 2: `{result2}`")
+
+# Check for state change
+if result2 and result2.get("logout_clicked") and not st.session_state.logout_clicked_2:
+    st.warning("✅ Logout button was clicked for user 2!")
+    st.session_state.logout_clicked_2 = True
+
+# Reset logic
+if result2 and not result2.get("logout_clicked") and st.session_state.logout_clicked_2:
+    st.session_state.logout_clicked_2 = False

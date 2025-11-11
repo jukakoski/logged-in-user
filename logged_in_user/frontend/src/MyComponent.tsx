@@ -2,6 +2,7 @@ import { ComponentArgs } from "@streamlit/component-v2-lib";
 import {
   FC,
   ReactElement,
+  useCallback,
   useEffect,
   useRef,
   useState,
@@ -50,18 +51,26 @@ const MyComponent: FC<MyComponentProps> = ({
 
   // Close menu when clicking outside
   useEffect(() => {
+    if (!showMenu) return;
+
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setShowMenu(false);
+        // small delay to allow menu click events to process
+        setTimeout(() => {
+          setShowMenu(false);
+        }, 100);
+        //
       }
     };
 
-    if (showMenu) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
+    // Add a small delay to prevent immediate closure when opening
+    const timeoutId = setTimeout(() => {
+      document.addEventListener("click", handleClickOutside, true);
+    }, 100);
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      clearTimeout(timeoutId);
+      document.removeEventListener("click", handleClickOutside, true);
     };
   }, [showMenu]);
 
@@ -70,11 +79,17 @@ const MyComponent: FC<MyComponentProps> = ({
   };
 
   const handleLogout = () => {
+    // Close the menu first
+    setShowMenu(false);
+
     // Notify Streamlit that logout was clicked
     setStateValue("logout_clicked", true);
 
     if (logout_url) {
-      window.location.href = logout_url;
+      // Delay to allow Streamlit to register the state change before redirecting
+      setTimeout(() => {
+        window.location.href = logout_url;
+      }, 300);
     }
   };
 
