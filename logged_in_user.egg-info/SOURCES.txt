@@ -9,4 +9,4 @@ logged_in_user.egg-info/SOURCES.txt
 logged_in_user.egg-info/dependency_links.txt
 logged_in_user.egg-info/requires.txt
 logged_in_user.egg-info/top_level.txt
-logged_in_user/frontend/build/index-D8jQaFIK.js
+logged_in_user/frontend/build/index-DbN4u2Fk.js
