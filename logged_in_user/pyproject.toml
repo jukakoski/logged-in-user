@@ -1,0 +1,4 @@
+[tool.streamlit.component]
+components = [
+  { name = "logged_in_user", asset_dir = "frontend/build" }
+]
