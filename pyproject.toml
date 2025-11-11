@@ -35,5 +35,5 @@ logged_in_user = ["frontend/build/**/*", "pyproject.toml"]
 
 [tool.streamlit.component]
 components = [
-  { name = "logged_in_user", asset_dir = "logged_in_user/frontend/build" }
+  { name = "logged_in_user", asset_dir = "frontend/build" }
 ]
